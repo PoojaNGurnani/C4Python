@@ -1,0 +1,13 @@
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+jupyter
+pygame
+pyttsx3
+pypiwin32
+pywin32
+streamlit
+requests
+

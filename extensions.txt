@@ -1,0 +1,11 @@
+ms-python.python
+ms-python.vscode-pylance
+ms-toolsai.jupyter
+ms-toolsai.jupyter-renderers
+ms-toolsai.jupyter-keymap
+visualstudioexptteam.vscodeintellicode
+esbenp.prettier-vscode
+oderwat.indent-rainbow
+christian-kohler.path-intellisense
+aaron-bond.better-comments
+GitHub.copilot
