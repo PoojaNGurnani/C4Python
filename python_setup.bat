@@ -111,9 +111,10 @@ if exist StudentPythonActivity.zip (
     echo  StudentPythonActivity.zip not found in %cd% >> %LOGFILE%
 )
 
-:: ---- Open VS Code ----
-echo Launching VS Code with StudentPythonActivity... >> %LOGFILE%
-code StudentPythonActivity >> %LOGFILE% 2>&1
+echo ============================== >> %LOGFILE%
+echo Setup completed at %date% %time% >> %LOGFILE%
+echo ============================== >> %LOGFILE%
+
 
 ::---- installation of extension
 
@@ -121,10 +122,6 @@ for /f %%e in (extensions.txt) do (
     echo Installing extension %%e >> %LOGFILE%
     code --install-extension %%e >> %LOGFILE% 2>&1
 )
-
-echo ============================== >> %LOGFILE%
-echo Setup completed at %date% %time% >> %LOGFILE%
-echo ============================== >> %LOGFILE%
 
 echo  Setup complete! Check %LOGFILE% for details.
 echo Press any key to close this window...
