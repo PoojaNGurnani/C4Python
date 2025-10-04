@@ -69,22 +69,58 @@ echo Installing VS Code extensions... >> %LOGFILE%
     echo GitHub.copilot
 ) > extensions.txt
 
+
+
+
+echo ================= DEBUG INFO =================
+echo Current directory: %cd%
+echo Files in this directory:
+dir /b
+echo ==============================================
+
+
+
+
+:: ---- Extract StudentPythonActivity.zip ----
+if exist StudentPythonActivity.zip (
+    echo  Extracting StudentPythonActivity.zip...
+    echo Extracting StudentPythonActivity.zip... >> %LOGFILE%
+
+    :: Remove old folder if exists
+    if exist StudentPythonActivity (
+        echo Removing old StudentPythonActivity folder... >> %LOGFILE%
+        rmdir /s /q StudentPythonActivity
+    )
+    mkdir StudentPythonActivity
+
+    :: Try tar first
+    tar -xf StudentPythonActivity.zip -C StudentPythonActivity >> %LOGFILE% 2>&1
+    if %ERRORLEVEL% neq 0 (
+        echo  tar failed, trying PowerShell unzip... >> %LOGFILE%
+        powershell -Command ^
+        "Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::ExtractToDirectory('StudentPythonActivity.zip','StudentPythonActivity')" >> %LOGFILE% 2>&1
+    )
+
+    :: Confirm extraction worked
+    if exist StudentPythonActivity (
+        echo  Extraction complete. >> %LOGFILE%
+    ) else (
+        echo  Extraction failed. >> %LOGFILE%
+    )
+) else (
+    echo  StudentPythonActivity.zip not found in %cd% >> %LOGFILE%
+)
+
+:: ---- Open VS Code ----
+echo Launching VS Code with StudentPythonActivity... >> %LOGFILE%
+code StudentPythonActivity >> %LOGFILE% 2>&1
+
+::---- installation of extension
+
 for /f %%e in (extensions.txt) do (
     echo Installing extension %%e >> %LOGFILE%
     code --install-extension %%e >> %LOGFILE% 2>&1
 )
-
-:: ---- Extract project files ----
-if exist project_files.zip (
-    echo Extracting project files... >> %LOGFILE%
-    powershell -Command "Expand-Archive -Path project_files.zip -DestinationPath project_files -Force"
-) else (
-    echo project_files.zip not found, skipping extraction >> %LOGFILE%
-)
-
-:: ---- Open VS Code ----
-echo Launching VS Code with project files... >> %LOGFILE%
-code project_files >> %LOGFILE% 2>&1
 
 echo ============================== >> %LOGFILE%
 echo Setup completed at %date% %time% >> %LOGFILE%
